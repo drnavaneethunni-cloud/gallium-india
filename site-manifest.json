@@ -1,0 +1,708 @@
+{
+  "format": 1,
+  "uncompressedBytes": 56348181,
+  "sha256": "af582c45329a06148a330ea3970f69c6ab7a1db685f5014d239df2e3b8152b06",
+  "chunks": [
+    {
+      "file": "gallium-site-01.bin",
+      "bytes": 18874368,
+      "sha256": "0afbd9a9807627a245c5d9eeb2ac6dc54afadb79cecfe35e9df5fc5efba31bbf"
+    },
+    {
+      "file": "gallium-site-02.bin",
+      "bytes": 18874368,
+      "sha256": "79b246d221574c48a990e05a009be2c3ec392cbac32188eb6a936267d9788c92"
+    },
+    {
+      "file": "gallium-site-03.bin",
+      "bytes": 16113460,
+      "sha256": "7ffbcf382060fb2cdae9fc061e5a05f41d4e3c75afb4c2954f8bff67ef794240"
+    }
+  ],
+  "files": [
+    {
+      "path": ".gitattributes",
+      "offset": 0,
+      "size": 13,
+      "sha256": "547f59603028195ff9f8a87d04c4651551e8bd0d68f075257dfd549cd846b25b"
+    },
+    {
+      "path": ".gitignore",
+      "offset": 13,
+      "size": 39,
+      "sha256": "06317f08ccb281b3e65ba06be27aaa96f394e61a5c2f07676717be5a1e00b6bc"
+    },
+    {
+      "path": "README.md",
+      "offset": 52,
+      "size": 8250,
+      "sha256": "4fd4295e30ae036438736fd752397c0f9445567152a0732e55fc51954aa9e94c"
+    },
+    {
+      "path": "build.mjs",
+      "offset": 8302,
+      "size": 201,
+      "sha256": "a66f7b7408f2f9624bceb41ee2d25ab9289c8725e5c8490d970b2f9d1de3ff3a"
+    },
+    {
+      "path": "package.json",
+      "offset": 8503,
+      "size": 164,
+      "sha256": "684dc8287386b8d8788d9d0e49e6fccf30ca92a7049b8a9289c233d5f81f0e45"
+    },
+    {
+      "path": "public/app.js",
+      "offset": 8667,
+      "size": 16782,
+      "sha256": "e73a45ab25b171e3e22340e0621eb6d343e51567d8bc8b14b34f788ccaa8becc"
+    },
+    {
+      "path": "public/assets/air-filter-housing.jpg",
+      "offset": 25449,
+      "size": 126407,
+      "sha256": "1aa84ca4cc1ba1abbdb923cf394d8cd6795fa123c20b3e4543a68438f037e51f"
+    },
+    {
+      "path": "public/assets/air-filter.jpg",
+      "offset": 151856,
+      "size": 254161,
+      "sha256": "ef355baf54fcf70a87ae1e99bc1f995f71db4b0a7572b31c3ce2d39febcd3f14"
+    },
+    {
+      "path": "public/assets/air-oil-separator.jpg",
+      "offset": 406017,
+      "size": 161170,
+      "sha256": "f12513ef189a570b7f9ec09794fba981d52b2c80ac2b06b242356f741e4e1344"
+    },
+    {
+      "path": "public/assets/breather-filter.jpg",
+      "offset": 567187,
+      "size": 82663,
+      "sha256": "ca0cf90687c3817cc47c14420179a9fa560de03026624f1b037290a7647480f7"
+    },
+    {
+      "path": "public/assets/cabin-air-filter.jpg",
+      "offset": 649850,
+      "size": 187794,
+      "sha256": "0582d2f9d8a0ea9bd815d12dc681bf6b9c5e7936d52654be2d7c5370a9f73e4b"
+    },
+    {
+      "path": "public/assets/catalogues/product-01-thumb.webp",
+      "offset": 837644,
+      "size": 6872,
+      "sha256": "a1c893d813d4d16996e4ccdb61d7d1be6e5df4a01daf061eb80105dc5976a274"
+    },
+    {
+      "path": "public/assets/catalogues/product-01.webp",
+      "offset": 844516,
+      "size": 56330,
+      "sha256": "93db7aa644712fa6ff3b3f08efc82ef7631085f65d08708cd22394bd1bfa1afa"
+    },
+    {
+      "path": "public/assets/catalogues/product-02-thumb.webp",
+      "offset": 900846,
+      "size": 12378,
+      "sha256": "5445b2edab425c03000c8fe6c300073975c79c3a54a8b1296c8127f57cc9c3dc"
+    },
+    {
+      "path": "public/assets/catalogues/product-02.webp",
+      "offset": 913224,
+      "size": 127360,
+      "sha256": "20386cd20ed8b8e18d9a933e5197e7097b03d02a579d2c7349df768935a5da1c"
+    },
+    {
+      "path": "public/assets/catalogues/product-03-thumb.webp",
+      "offset": 1040584,
+      "size": 15966,
+      "sha256": "d41acbb1f39890040ef8c7c8b2cfd76996626fa7337982440eff58ec2fc6ead3"
+    },
+    {
+      "path": "public/assets/catalogues/product-03.webp",
+      "offset": 1056550,
+      "size": 149438,
+      "sha256": "0c4ea11d234f4cf7c620c2ee262aab95951772b3b6a1ce2e35fa0591252dc8ee"
+    },
+    {
+      "path": "public/assets/catalogues/product-04-thumb.webp",
+      "offset": 1205988,
+      "size": 14422,
+      "sha256": "0fe7d34db5c3bd38804a6649e6d03d4f5e8d4e672afc678437106b3e77499d78"
+    },
+    {
+      "path": "public/assets/catalogues/product-04.webp",
+      "offset": 1220410,
+      "size": 149290,
+      "sha256": "1313ceee8182eb302ff12e410fce3923acf1f24c2024178526b899a5a08749cc"
+    },
+    {
+      "path": "public/assets/catalogues/product-05-thumb.webp",
+      "offset": 1369700,
+      "size": 11558,
+      "sha256": "2de89cfd1ce9a411c8bdabb2fcf299bcb3474f1fbac0c495b61c7f8852bf4a62"
+    },
+    {
+      "path": "public/assets/catalogues/product-05.webp",
+      "offset": 1381258,
+      "size": 117448,
+      "sha256": "357ac057dadc7c48376845b4905578e152d545b01c12fa73f5d5ca2af727f6cd"
+    },
+    {
+      "path": "public/assets/catalogues/product-06-thumb.webp",
+      "offset": 1498706,
+      "size": 11238,
+      "sha256": "b1aaeddc54d041da705b7d98643a799613f3986b26be390db44846912ed6a4b7"
+    },
+    {
+      "path": "public/assets/catalogues/product-06.webp",
+      "offset": 1509944,
+      "size": 101862,
+      "sha256": "7437df2ecf192e8465bbee3fa5b62edf39a90244135d42a3a9d53f0d19f79862"
+    },
+    {
+      "path": "public/assets/catalogues/product-07-thumb.webp",
+      "offset": 1611806,
+      "size": 12372,
+      "sha256": "0d77f88ce1cf0243f680be416771fca93b3048cc1faa68f91f670250c476c2ea"
+    },
+    {
+      "path": "public/assets/catalogues/product-07.webp",
+      "offset": 1624178,
+      "size": 151044,
+      "sha256": "05fd9bacc1d3522fe50daf7c4cd6addb4e4417a19ee591bece052fd1bc4815ac"
+    },
+    {
+      "path": "public/assets/catalogues/product-08-thumb.webp",
+      "offset": 1775222,
+      "size": 10442,
+      "sha256": "eb3ee72161d79bd216775b53ea6cd83c5a6c877b2ea899d86dd40a89af17ec48"
+    },
+    {
+      "path": "public/assets/catalogues/product-08.webp",
+      "offset": 1785664,
+      "size": 173410,
+      "sha256": "e78338348474c8ea1871b62e42889a93e0101918b4f9bd20240b0df8ca8fb20b"
+    },
+    {
+      "path": "public/assets/catalogues/product-09-thumb.webp",
+      "offset": 1959074,
+      "size": 9326,
+      "sha256": "212a4a594b93ae3cf30a89eb10ae4b55d39cdf888e8240a61c8dde51963f28f8"
+    },
+    {
+      "path": "public/assets/catalogues/product-09.webp",
+      "offset": 1968400,
+      "size": 163280,
+      "sha256": "38bbce5520d34970c022e91b50df88c37fd7256d160d5c3c1978c3029b1a9657"
+    },
+    {
+      "path": "public/assets/catalogues/product-10-thumb.webp",
+      "offset": 2131680,
+      "size": 10614,
+      "sha256": "3d71f84849ac02286bc22ea6b0b267f3908da4dd4ae477ee3faebb5faaa88af3"
+    },
+    {
+      "path": "public/assets/catalogues/product-10.webp",
+      "offset": 2142294,
+      "size": 162056,
+      "sha256": "6101a851bf2f837b9d2946e603edd035b49008f5664999dc50f520d7622a4018"
+    },
+    {
+      "path": "public/assets/catalogues/product-11-thumb.webp",
+      "offset": 2304350,
+      "size": 13000,
+      "sha256": "25ad2f890c5c9de6edba8fc5a47192edae41de634b587c69607f5ec1a555e36a"
+    },
+    {
+      "path": "public/assets/catalogues/product-11.webp",
+      "offset": 2317350,
+      "size": 207590,
+      "sha256": "e9e1ca8bdf77c6cf9cdc957a7f298cf845103578cbb6d2e980148e02e658307c"
+    },
+    {
+      "path": "public/assets/catalogues/product-12-thumb.webp",
+      "offset": 2524940,
+      "size": 9004,
+      "sha256": "3a46b72fcce6c5e65f017597eb0c239e948d852851ee09cf56ecfe7f7a6d3754"
+    },
+    {
+      "path": "public/assets/catalogues/product-12.webp",
+      "offset": 2533944,
+      "size": 78838,
+      "sha256": "1f9bee1f59245c70f796ca938dd09c67182406084dc4b9267abe01b71efdd8bf"
+    },
+    {
+      "path": "public/assets/catalogues/product-13-thumb.webp",
+      "offset": 2612782,
+      "size": 14196,
+      "sha256": "c8ae2dbb91f8d65e479e19a13bfa74a66c7eb6b3cb944676d30e5c3298b1aee2"
+    },
+    {
+      "path": "public/assets/catalogues/product-13.webp",
+      "offset": 2626978,
+      "size": 153298,
+      "sha256": "6c7934de1428a9a37b8e19afb8fcd0053c046dc0a4c20925d36ec99140a37028"
+    },
+    {
+      "path": "public/assets/catalogues/product-14-thumb.webp",
+      "offset": 2780276,
+      "size": 12174,
+      "sha256": "c315ffdd15af0a2eab65c89567284b77a2de6a22fbe356876d1e86e869f4ab27"
+    },
+    {
+      "path": "public/assets/catalogues/product-14.webp",
+      "offset": 2792450,
+      "size": 154792,
+      "sha256": "526bfb877c7d7699859940fbb0e29ddea3e4d1b837b8d09547f99764e70b2a53"
+    },
+    {
+      "path": "public/assets/catalogues/product-15-thumb.webp",
+      "offset": 2947242,
+      "size": 9074,
+      "sha256": "b42ca492d2dc79df6ac8981924103f51cc899e5fb8da7dc9b313f23fd61379ae"
+    },
+    {
+      "path": "public/assets/catalogues/product-15.webp",
+      "offset": 2956316,
+      "size": 136236,
+      "sha256": "715e0098bbf6ff29ae2d99744b5bb2a8be2ac7ff2495e5bdde9827c416ab833d"
+    },
+    {
+      "path": "public/assets/catalogues/product-16-thumb.webp",
+      "offset": 3092552,
+      "size": 12064,
+      "sha256": "9cae667ed0c9a17a11febc6848467771e609298bc726ed9606002c1970960ecb"
+    },
+    {
+      "path": "public/assets/catalogues/product-16.webp",
+      "offset": 3104616,
+      "size": 156590,
+      "sha256": "1e3e9114dfe513e348935b0419fb0fcc1cec65a55e99088712307fbd68b67813"
+    },
+    {
+      "path": "public/assets/catalogues/product-17-thumb.webp",
+      "offset": 3261206,
+      "size": 11128,
+      "sha256": "89a30059030bbf03eb21dd3682ae6c38f03971df9949ce3dc6dbced4645da798"
+    },
+    {
+      "path": "public/assets/catalogues/product-17.webp",
+      "offset": 3272334,
+      "size": 108462,
+      "sha256": "eeb95ee0a6d7e2faab16d09284a58d446533205b62009d9ccc5442065a03a181"
+    },
+    {
+      "path": "public/assets/catalogues/product-18-thumb.webp",
+      "offset": 3380796,
+      "size": 10506,
+      "sha256": "a021fc7244ea200d3bd2ad393888e4c6d2faf5153b0a39591a58c60680a7746b"
+    },
+    {
+      "path": "public/assets/catalogues/product-18.webp",
+      "offset": 3391302,
+      "size": 102814,
+      "sha256": "ba4cf1c46a51684b38f894362e5449137a89103ae0fe36b904edcb0cf5eec080"
+    },
+    {
+      "path": "public/assets/catalogues/product-19-thumb.webp",
+      "offset": 3494116,
+      "size": 12880,
+      "sha256": "1abf2e9cacef2a92553832feeffd0b5e5e0a8c094ececd573a64513a07104fcf"
+    },
+    {
+      "path": "public/assets/catalogues/product-19.webp",
+      "offset": 3506996,
+      "size": 153340,
+      "sha256": "17885d412d9b293ac497ec8eaf5f1f24c4e10c57a7b7239b7b0f14ce6047bdf1"
+    },
+    {
+      "path": "public/assets/catalogues/product-20-thumb.webp",
+      "offset": 3660336,
+      "size": 9046,
+      "sha256": "5a00160bbf0b00e783078d7dd4a38d6a3f0eaa29a1ac3b874d9e1c7134da16f3"
+    },
+    {
+      "path": "public/assets/catalogues/product-20.webp",
+      "offset": 3669382,
+      "size": 84334,
+      "sha256": "7d546002d735eaff289ac5758c4dfa9dcd17d7f57927c6ccd14b9822e9cc07a8"
+    },
+    {
+      "path": "public/assets/catalogues/product-21-thumb.webp",
+      "offset": 3753716,
+      "size": 9648,
+      "sha256": "e21c5a61cce091737befc154708c82f4bdf9494ab0fd8b049db4ee8c720f991b"
+    },
+    {
+      "path": "public/assets/catalogues/product-21.webp",
+      "offset": 3763364,
+      "size": 106630,
+      "sha256": "e62692b930ea5255754c9b25c33fde669ccd7a770854b597be27f2c943187725"
+    },
+    {
+      "path": "public/assets/catalogues/product-22-thumb.webp",
+      "offset": 3869994,
+      "size": 14982,
+      "sha256": "9c63e88cd402af5b8a40b4ea38535d4059ba30029021c13a1e8ea65163e3da03"
+    },
+    {
+      "path": "public/assets/catalogues/product-22.webp",
+      "offset": 3884976,
+      "size": 200370,
+      "sha256": "d07f5366e924550ff41f0228c1399ab09d2e56a3b1f612de2724b2879708c76e"
+    },
+    {
+      "path": "public/assets/catalogues/product-23-thumb.webp",
+      "offset": 4085346,
+      "size": 13914,
+      "sha256": "a867619fdb8d018017904b1d80154466083f96c41ec22ae739242f1eb338d71e"
+    },
+    {
+      "path": "public/assets/catalogues/product-23.webp",
+      "offset": 4099260,
+      "size": 166018,
+      "sha256": "8576b48b9b1dcf6d7fac0cf0a9a3770a99b78db83f7b08e73298350abfc4cf6d"
+    },
+    {
+      "path": "public/assets/catalogues/product-24-thumb.webp",
+      "offset": 4265278,
+      "size": 13102,
+      "sha256": "4603df33c5b2d871505e7e83acebb3cd34dd98dd97ff96f43e15d4154b3a75df"
+    },
+    {
+      "path": "public/assets/catalogues/product-24.webp",
+      "offset": 4278380,
+      "size": 128862,
+      "sha256": "5dfff23db1d603d075b39ca67ac52a0c2b70b52a90e5c7a9c3a3985bdce9e2c8"
+    },
+    {
+      "path": "public/assets/catalogues/product-25-thumb.webp",
+      "offset": 4407242,
+      "size": 11822,
+      "sha256": "8e8e122b55978b77ae5cf7c1a3d291a5cd778743d722f82ab590a19eba5560df"
+    },
+    {
+      "path": "public/assets/catalogues/product-25.webp",
+      "offset": 4419064,
+      "size": 138832,
+      "sha256": "5b93b24c892b71c20402e623ce932530fbc9d73b9c6cd6ff799203070350660e"
+    },
+    {
+      "path": "public/assets/catalogues/product-26-thumb.webp",
+      "offset": 4557896,
+      "size": 10096,
+      "sha256": "727bb0293aa2e5060be384a140ca36f0803723de48c102c34eca40e0a4320eaa"
+    },
+    {
+      "path": "public/assets/catalogues/product-26.webp",
+      "offset": 4567992,
+      "size": 183414,
+      "sha256": "510fd5ce40206c28a6562694141816572d169330f0a8454968307a480d64574f"
+    },
+    {
+      "path": "public/assets/catalogues/product-27-thumb.webp",
+      "offset": 4751406,
+      "size": 7272,
+      "sha256": "9d6316131c208722382c9401cb46ca901c1b5bde178b69d0862d404b2b6d4a48"
+    },
+    {
+      "path": "public/assets/catalogues/product-27.webp",
+      "offset": 4758678,
+      "size": 190598,
+      "sha256": "a0c1d83b5222bac7b6ee9be14c6ecdaa9a72a50e8e86786d8c43b5612e1b2397"
+    },
+    {
+      "path": "public/assets/catalogues/product-28-thumb.webp",
+      "offset": 4949276,
+      "size": 2802,
+      "sha256": "0b99a676285534b41a087cec77c614213d7c78d2f5438f8cf51d2f40c85b9b5b"
+    },
+    {
+      "path": "public/assets/catalogues/product-28.webp",
+      "offset": 4952078,
+      "size": 21724,
+      "sha256": "5105e326825cfafcd06606c24660e1b4819d15297d3adff72911fa52cc989683"
+    },
+    {
+      "path": "public/assets/catalogues/technical-01-thumb.webp",
+      "offset": 4973802,
+      "size": 7780,
+      "sha256": "9df789b455d09b88489e4e98a55063d4daab51eeb22d83fa70f1740ed9c667f9"
+    },
+    {
+      "path": "public/assets/catalogues/technical-01.webp",
+      "offset": 4981582,
+      "size": 66336,
+      "sha256": "5c70340bd0216156d369fa6312ed810be02908cdef1213cbdaa4813c105c9d70"
+    },
+    {
+      "path": "public/assets/catalogues/technical-02-thumb.webp",
+      "offset": 5047918,
+      "size": 10132,
+      "sha256": "6d27ee8d167d3970b328456f9e1adcc011b3e6b9a5acbac2e5dbcab0d1b733df"
+    },
+    {
+      "path": "public/assets/catalogues/technical-02.webp",
+      "offset": 5058050,
+      "size": 99678,
+      "sha256": "e8b00ef215696b513d801206ef55079fada1ba829a2d159b98f83cae5810d0a8"
+    },
+    {
+      "path": "public/assets/catalogues/technical-03-thumb.webp",
+      "offset": 5157728,
+      "size": 14472,
+      "sha256": "0982817b2c07da73769b05e1d75fd78ed86307169b00fac46d48a2fcae0b17a6"
+    },
+    {
+      "path": "public/assets/catalogues/technical-03.webp",
+      "offset": 5172200,
+      "size": 126600,
+      "sha256": "ed0365f860886279303f20e8b6c403d745add04a14c822eb0d22ac607584dca7"
+    },
+    {
+      "path": "public/assets/catalogues/technical-04-thumb.webp",
+      "offset": 5298800,
+      "size": 10862,
+      "sha256": "b64baf5931818a98a4334c304e9a1a6031172670b1c658098065bb60d91508cc"
+    },
+    {
+      "path": "public/assets/catalogues/technical-04.webp",
+      "offset": 5309662,
+      "size": 88598,
+      "sha256": "769bbdca118dafd8515c269a5226f26cd6c95b7693a6b0ca20ca4fe6641caf10"
+    },
+    {
+      "path": "public/assets/catalogues/technical-05-thumb.webp",
+      "offset": 5398260,
+      "size": 13208,
+      "sha256": "0ea4265e689a51125390fdced099206020f8db24d8965a0fc095b814d7144647"
+    },
+    {
+      "path": "public/assets/catalogues/technical-05.webp",
+      "offset": 5411468,
+      "size": 115388,
+      "sha256": "ddc4beb5103551d7e73fbc4689bbff81150efbab2d318f1b66c78740338c2e40"
+    },
+    {
+      "path": "public/assets/catalogues/technical-06-thumb.webp",
+      "offset": 5526856,
+      "size": 14498,
+      "sha256": "e064cd791f284637c02b69fd5f5b428b5c5012cdd81409308397c0d53a165137"
+    },
+    {
+      "path": "public/assets/catalogues/technical-06.webp",
+      "offset": 5541354,
+      "size": 180608,
+      "sha256": "872817c8e9e6231e930d3a0a0ea991e3a1ff9981d4e869b91302b012835e7dbf"
+    },
+    {
+      "path": "public/assets/catalogues/technical-07-thumb.webp",
+      "offset": 5721962,
+      "size": 11376,
+      "sha256": "4d19ab0f04b7d857c821bc57beb6b44f7157c81392c2dc04834682411a2e732d"
+    },
+    {
+      "path": "public/assets/catalogues/technical-07.webp",
+      "offset": 5733338,
+      "size": 97036,
+      "sha256": "90c7df22cedb1e4128f1066cca4b649e0a6192a34d1bfa02953c44597b339a1c"
+    },
+    {
+      "path": "public/assets/catalogues/technical-08-thumb.webp",
+      "offset": 5830374,
+      "size": 5364,
+      "sha256": "6339d582d6ee6fc8ce2eeeceaa0d60e8fb9133666fde1681be9c2b854b0b7fa9"
+    },
+    {
+      "path": "public/assets/catalogues/technical-08.webp",
+      "offset": 5835738,
+      "size": 38410,
+      "sha256": "ae66846d1def0dc095ccc5284c95aa79910a4fb30268b93f21392e56fe62c0e3"
+    },
+    {
+      "path": "public/assets/filter-assembly.jpg",
+      "offset": 5874148,
+      "size": 158418,
+      "sha256": "da7e72f3a77ef015c66963f9ab8b183df8feedafe8db5fd11b12220dd087979e"
+    },
+    {
+      "path": "public/assets/filter-head.jpg",
+      "offset": 6032566,
+      "size": 51252,
+      "sha256": "f48936cc43931ab4a89759668d563923dce5bba54f13d4751552698359e3131b"
+    },
+    {
+      "path": "public/assets/filter-hero.webp",
+      "offset": 6083818,
+      "size": 44866,
+      "sha256": "7871f71632de55f797f96b6877311c3f9e6fb701e92c316971647e77edcacd32"
+    },
+    {
+      "path": "public/assets/fonts/SOURCES.md",
+      "offset": 6128684,
+      "size": 608,
+      "sha256": "7ab7d36ceecbf9128e8ee4feba8745e6bb88510735e7b575dc0820b824ff6027"
+    },
+    {
+      "path": "public/assets/fonts/barlow-semi-condensed-600.woff2",
+      "offset": 6129292,
+      "size": 22984,
+      "sha256": "f158417e9207b5362f9b71a2fe779ce5bb836ad972f38445c3163af39d2c998d"
+    },
+    {
+      "path": "public/assets/fonts/barlowsemicondensed-OFL.txt",
+      "offset": 6152276,
+      "size": 4376,
+      "sha256": "10b0e6bb43166a50fbe7cde2895bd7f703738a5da843acb5c97c95dc9ea26817"
+    },
+    {
+      "path": "public/assets/fonts/inter-OFL.txt",
+      "offset": 6156652,
+      "size": 4376,
+      "sha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39"
+    },
+    {
+      "path": "public/assets/fonts/inter-latin.woff2",
+      "offset": 6161028,
+      "size": 48256,
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "path": "public/assets/fuel-filter.jpg",
+      "offset": 6209284,
+      "size": 78330,
+      "sha256": "f67e68c1525e366eda6e2c64b75aa0a57bb06ad41862556874920bd0fa0572f3"
+    },
+    {
+      "path": "public/assets/fuel-water-separator.jpg",
+      "offset": 6287614,
+      "size": 180080,
+      "sha256": "1a262645313de77b274c7c24457cd8b6ccda618bbae35a073eddb088f534ca5c"
+    },
+    {
+      "path": "public/assets/hydraulic-filter.jpg",
+      "offset": 6467694,
+      "size": 101022,
+      "sha256": "9c0b89abda2b65a6550d338c15403913d7ff8e8907209459858f5dabcb506130"
+    },
+    {
+      "path": "public/assets/logo.svg",
+      "offset": 6568716,
+      "size": 73197,
+      "sha256": "a57e8c3eb14e395edf009af3e6deca227cad28ba0fcf3cb24d993e648f46ff5d"
+    },
+    {
+      "path": "public/assets/oil-filter.jpg",
+      "offset": 6641913,
+      "size": 103151,
+      "sha256": "5796af95979889700da3128b81c727406f921268a717779d95f011a739c0e73c"
+    },
+    {
+      "path": "public/assets/water-filter.jpg",
+      "offset": 6745064,
+      "size": 138924,
+      "sha256": "69ff748c58a34012982dc7d5125258ca66c2a180c4114314c31fb7b3dff2e16f"
+    },
+    {
+      "path": "public/brochure-viewer.mjs",
+      "offset": 6883988,
+      "size": 3408,
+      "sha256": "0b611ff12c5b6a63ca7cebcf3d35f01291ec492ff91419369cbafdad586ba15e"
+    },
+    {
+      "path": "public/brochures.mjs",
+      "offset": 6887396,
+      "size": 1672,
+      "sha256": "3918461f59a8f8ce7c0f7820776f40c5b95220ff3df7d522a3dcd1453ebae8b1"
+    },
+    {
+      "path": "public/catalogue.json",
+      "offset": 6889068,
+      "size": 16406,
+      "sha256": "80fd6cf630103eb95b4724605e2853909da10008004ee6c00b26683a1ce42d03"
+    },
+    {
+      "path": "public/downloads/gallium-product-brochure.pdf",
+      "offset": 6905474,
+      "size": 43587364,
+      "sha256": "e82dcb41b1210b42c110824c51b2953883811451ae69d9ce699d26dd1042691a"
+    },
+    {
+      "path": "public/downloads/gallium-technical-brochure.pdf",
+      "offset": 50492838,
+      "size": 5776655,
+      "sha256": "5c6eac936eb23c2ba5b075b459c126d63ee9d6d1b2fd36288517d4f5c81dec77"
+    },
+    {
+      "path": "public/index.html",
+      "offset": 56269493,
+      "size": 27339,
+      "sha256": "5cccb37941bf534dbc11ca367d94c3ef52bc0c71c0dc141ab9b281568d4b2a70"
+    },
+    {
+      "path": "public/motion.mjs",
+      "offset": 56296832,
+      "size": 4201,
+      "sha256": "43712ddba94431f7de52fd9405c2dae4219d0866d7ef8b9120841b007a19b926"
+    },
+    {
+      "path": "public/parts.json",
+      "offset": 56301033,
+      "size": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "public/robots.txt",
+      "offset": 56301036,
+      "size": 78,
+      "sha256": "6baeb5f4376e07a9d5c22d811b2fc7c672877c97634b95f1d0fa16c892843307"
+    },
+    {
+      "path": "public/search.mjs",
+      "offset": 56301114,
+      "size": 639,
+      "sha256": "2bc84830237da401533431d68e343ff9e1635b92391a5fabc21c2e0b1feac66e"
+    },
+    {
+      "path": "public/sitemap.xml",
+      "offset": 56301753,
+      "size": 197,
+      "sha256": "591e59294cc83eb442a47177c35f0d57ad43f307f3b528a10e2944367a894042"
+    },
+    {
+      "path": "public/styles.css",
+      "offset": 56301950,
+      "size": 40465,
+      "sha256": "02bc77a884ae60fdfdfce5a1354331f305fe18edb840f1df65c5fd9e1e2e650a"
+    },
+    {
+      "path": "scripts/brochure-sources.json",
+      "offset": 56342415,
+      "size": 364,
+      "sha256": "b2dfee80a50ad4276d78c3cf120168ab8d17546996dbd494f83460bca2b72d67"
+    },
+    {
+      "path": "scripts/render-brochures.py",
+      "offset": 56342779,
+      "size": 1478,
+      "sha256": "5ec318eba6383971f18112fd050ddc8d0766acb19ac36b7744300b8581db447b"
+    },
+    {
+      "path": "tests/brochures.test.mjs",
+      "offset": 56344257,
+      "size": 2387,
+      "sha256": "c1c7436a2aad782fddd986279de876dbdeea6ec8c62c9768ae814dd58c46d6b3"
+    },
+    {
+      "path": "tests/search.test.mjs",
+      "offset": 56346644,
+      "size": 1164,
+      "sha256": "ec121d5fdccc146aa0c802aa50914bb9b3a58728bf8c2013dad4633eaa7769df"
+    },
+    {
+      "path": "vercel.json",
+      "offset": 56347808,
+      "size": 373,
+      "sha256": "1844af52570373f7f4c0e7216bcb058ecfba711391e436843dbfafd579fd2691"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "gallium-india",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node build.mjs --test",
+    "unpack": "node build.mjs --unpack"
+  }
+}
