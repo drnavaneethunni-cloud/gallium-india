@@ -48,6 +48,23 @@
       </article>
     </div>
   </section>
+
+  <section class="filter-experience" id="filter-experience" aria-label="Explore the filter as you scroll">
+    <figure class="product-studio" id="filter-showcase" aria-label="Interactive oil filter construction">
+      <div class="studio-viewport" id="studio-viewport">
+        <div class="studio-ground" aria-hidden="true"></div>
+        <img class="studio-fallback" id="studio-fallback" src="assets/oil-filter.jpg" alt="Gallium oil filter category reference" width="1701" height="1135" fetchpriority="high">
+      </div>
+      <figcaption class="studio-caption">
+        <span id="studio-note">Illustrative construction</span>
+        <span class="scroll-cue" aria-hidden="true">SCROLL TO EXPLORE <span>↓</span></span>
+        <div class="studio-controls">
+          <button type="button" class="studio-explode" id="studio-explode" aria-pressed="false" disabled><span>View layers</span><span aria-hidden="true">↗</span></button>
+          <button type="button" class="studio-pause" id="studio-pause" aria-pressed="false" disabled><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 3h2v10H4zm6 0h2v10h-2z"/></svg><span>Pause motion</span></button>
+        </div>
+      </figcaption>
+    </figure>
+  </section>
   <section class="search-hero" id="find-filter" aria-labelledby="finder-title">
     <div class="search-main">
       <p class="eyebrow"><span></span> PART SEARCH & FILTER CATALOGUE</p>
@@ -74,26 +91,7 @@
 
       </div>
     </div>
-    <figure class="product-studio" id="filter-showcase" aria-label="Explore three filter constructions">
-      <div class="studio-topline"><span><i aria-hidden="true"></i>INSIDE THE FILTER</span><span>SCROLL TO EXPLORE ↓</span></div>
-      <div class="studio-tabs" role="group" aria-label="Choose an animated filter">
-        <button type="button" data-filter-model="air" aria-pressed="true"><span>01</span> Air</button>
-        <button type="button" data-filter-model="oil" aria-pressed="false"><span>02</span> Oil</button>
-        <button type="button" data-filter-model="hydraulic" aria-pressed="false"><span>03</span> Hydraulic</button>
-      </div>
-      <div class="studio-viewport" id="studio-viewport">
-        <div class="studio-detail"><span id="studio-category">AIR FILTRATION</span><strong id="studio-title">Air filter construction</strong></div>
-        <div class="studio-ground" aria-hidden="true"></div>
-        <img class="studio-fallback" id="studio-fallback" src="assets/air-filter.jpg" alt="Gallium air filter category reference" width="1701" height="1135" fetchpriority="high">
-        <span class="studio-phase" id="studio-phase" aria-hidden="true">ASSEMBLED</span>
-      </div>
-      <div class="studio-controls">
-        <button type="button" class="studio-explode" id="studio-explode" aria-pressed="false" disabled><span>View all layers</span><span aria-hidden="true">↗</span></button>
-        <button type="button" class="studio-pause" id="studio-pause" aria-pressed="false" disabled><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 3h2v10H4zm6 0h2v10h-2z"/></svg><span>Pause scroll motion</span></button>
-      </div>
-      <figcaption class="studio-caption"><span id="studio-note">Illustrative models · construction varies by part</span><a href="#catalogue" data-browse>Browse filters →</a></figcaption>
-      <div class="studio-progress" aria-hidden="true"><span></span></div>
-    </figure>
+
   </section>
   <section id="part-results" class="part-results" aria-labelledby="part-results-title" hidden>
     <div class="part-results-heading"><p class="eyebrow">PART SEARCH</p><button id="edit-reference" class="plain">Edit reference ↑</button></div>

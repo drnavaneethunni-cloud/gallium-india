@@ -150,8 +150,8 @@ function makeModel(type) {
   return {root,pose};
 }
 
-export function createModels() {
-  return Object.fromEntries(['air','oil','hydraulic'].map(key=>[key,makeModel(key)]));
+export function createOilModel() {
+  return makeModel('oil');
 }
 
 export function createStudioLighting(renderer, scene) {
