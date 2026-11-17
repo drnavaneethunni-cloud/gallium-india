@@ -146,8 +146,33 @@ function makeModel(type) {
     shell.rotation.z=-value*.18;
     media.position.x=oil?-value*.3:-value*.18;
   }
+  // Each part approaches along a different path. All transforms settle to zero
+  // so the final assembly preserves the original component geometry.
+  const ease=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);};
+  function assemble(progress, span, compact, right, up) {
+    const paths=compact ? [
+      [core, -.95*span, .8, -.75, 0, .61],
+      [media, -.55*span, -.1, -.32, .03, .68],
+      [bottom, -.2*span, -1.35, .55, .12, .76],
+      [shell, .65*span, -.45, .3, .18, .86],
+      [top, -.05*span, 1.1, -.2, .3, .94],
+      [seal, .7*span, 1.15, .4, .42, 1]
+    ] : [
+      [core, -.96*span, -.35, -.85, 0, .61],
+      [media, -.56*span, .1, -.3, .03, .68],
+      [bottom, .22*span, -.7, .45, .12, .76],
+      [shell, .86*span, -.15, .3, .18, .86],
+      [top, -.2*span, .85, -.18, .3, .94],
+      [seal, .48*span, .75, .35, .42, 1]
+    ];
+    paths.forEach(([part,x,y,tilt,start,end])=>{
+      const remaining=1-ease((progress-start)/(end-start));
+      part.position.copy(right).multiplyScalar(x*remaining).addScaledVector(up,y*remaining);
+      part.rotation.set(0,0,tilt*remaining);
+    });
+  }
   root.rotation.z=-.25;
-  return {root,pose};
+  return {root,pose,assemble};
 }
 
 export function createOilModel() {

@@ -34,7 +34,7 @@
 </header>
 <main id="main">
   <section class="catalogue-downloads" id="resources" aria-labelledby="downloads-title">
-    <div class="download-heading"><h2 id="downloads-title">Download brochures</h2><p>The complete range. Ready to keep.</p></div>
+    <div class="download-heading"><h2 id="downloads-title">Download brochures</h2><p>Product range & technical guide</p></div>
     <div class="download-grid">
       <article class="download-tile">
         <img src="assets/catalogues/product-01-thumb.webp" alt="" width="260" height="368">
@@ -49,7 +49,13 @@
     </div>
   </section>
 
-  <section class="filter-experience" id="filter-experience" aria-label="Explore the filter as you scroll">
+  <section class="search-hero" id="find-filter" aria-labelledby="finder-title">
+    <div class="search-main">
+      <p class="eyebrow"><span></span> PART SEARCH & FILTER CATALOGUE</p>
+      <h1 id="finder-title">Find your <em>filter.</em></h1>
+      <p class="search-intro">Search a part reference or browse by filter type.</p>
+    </div>
+  <div class="filter-experience" id="filter-experience" aria-label="Assemble the filter as you scroll">
     <figure class="product-studio" id="filter-showcase" aria-label="Interactive oil filter construction">
       <div class="studio-viewport" id="studio-viewport">
         <div class="studio-ground" aria-hidden="true"></div>
@@ -57,20 +63,15 @@
       </div>
       <figcaption class="studio-caption">
         <span id="studio-note">Illustrative construction</span>
-        <span class="scroll-cue" aria-hidden="true">SCROLL TO EXPLORE <span>↓</span></span>
+        <span class="scroll-cue" aria-hidden="true">SCROLL TO ASSEMBLE <span>↓</span></span>
         <div class="studio-controls">
-          <button type="button" class="studio-explode" id="studio-explode" aria-pressed="false" disabled><span>View layers</span><span aria-hidden="true">↗</span></button>
+          <button type="button" class="studio-explode" id="studio-explode" aria-pressed="false" disabled><span>Assemble filter</span><span aria-hidden="true">↗</span></button>
           <button type="button" class="studio-pause" id="studio-pause" aria-pressed="false" disabled><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 3h2v10H4zm6 0h2v10h-2z"/></svg><span>Pause motion</span></button>
         </div>
       </figcaption>
     </figure>
-  </section>
-  <section class="search-hero" id="find-filter" aria-labelledby="finder-title">
-    <div class="search-main">
-      <p class="eyebrow"><span></span> PART SEARCH & FILTER CATALOGUE</p>
-      <h1 id="finder-title">Find your <em>filter.</em></h1>
-      <p class="search-intro">Search a part reference or browse by filter type.</p>
-      <div class="search-workspace">
+  </div>
+    <div class="search-workspace">
         <div class="modes" role="group" aria-label="Search mode">
           <button type="button" class="active" data-mode="parts" aria-pressed="true">Part number / OEM</button>
           <button type="button" data-mode="filters" aria-pressed="false">Filter type</button>
@@ -89,9 +90,7 @@
         <p id="search-status" class="sr-only" role="status"></p>
         <div class="quick-types" aria-label="Quick filter searches"><span>Browse by type</span><button data-query="air">Air</button><button data-query="oil filter">Oil</button><button data-query="fuel">Fuel</button><button data-query="hydraulic">Hydraulic</button></div>
 
-      </div>
     </div>
-
   </section>
   <section id="part-results" class="part-results" aria-labelledby="part-results-title" hidden>
     <div class="part-results-heading"><p class="eyebrow">PART SEARCH</p><button id="edit-reference" class="plain">Edit reference ↑</button></div>

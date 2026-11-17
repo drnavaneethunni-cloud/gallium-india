@@ -29,24 +29,33 @@ async function start() {
   createStudioLighting(renderer,scene);
   const model=createOilModel();
   scene.add(model.root);
-  canvas.setAttribute('aria-label','Illustrative oil filter. Scroll to reveal its components, or use View layers.');
+  canvas.setAttribute('aria-label','Illustrative oil filter. Components arrive from different directions and assemble as you scroll. Use Assemble filter for a manual view.');
   // A single model renders immediately and moves only in response to interaction.
   viewport.append(canvas);
-  let aspect=1,spread=.04,target=.04,scrollStart=0,scrollDistance=300;
+  const right=new THREE.Vector3(),up=new THREE.Vector3(),inverse=new THREE.Quaternion();
+  let aspect=1,progress=preference.matches?1:0,target=progress,scrollStart=0,scrollDistance=220,compact=false;
   let userPaused=false,visible=false,frame=0,lastTime=0,rotation=0,dragging=false,lastX=0,contextLost=false;
 
   function render() {
-    model.pose(spread);
-    model.root.rotation.set(.08,-.28+spread*.52+rotation,-.24+spread*.07);
-    model.root.position.y=-.06;
-    const half=Math.max(1.6+spread*.56,(1.15+spread*1.25)/aspect);
+    const half=compact?3.25-progress*1.35:2.5-progress*.6;
+    const span=compact?Math.min(4.2,aspect*3.25*.82):Math.min(13,aspect*2.5*.82);
+    model.root.rotation.set(.02,-.28+progress*.12+rotation,-.07-progress*.12);
+    inverse.copy(model.root.quaternion).invert();
+    right.set(1,0,0).applyQuaternion(camera.quaternion).applyQuaternion(inverse);
+    up.set(0,1,0).applyQuaternion(camera.quaternion).applyQuaternion(inverse);
+    model.assemble(progress,span,compact,right,up);
+    model.root.position.y=-.05;
     camera.left=-half*aspect;camera.right=half*aspect;camera.top=half;camera.bottom=-half;
     camera.updateProjectionMatrix();
     renderer.render(scene,camera);
-    studio.style.setProperty('--explosion',spread.toFixed(3));
-    const open=spread>.5;
-    explode.setAttribute('aria-pressed',String(open));
-    explode.firstElementChild.textContent=open?'Assemble':'View layers';
+    studio.style.setProperty('--assembly',progress.toFixed(3));
+    const assembled=progress>.5;
+    explode.setAttribute('aria-pressed',String(assembled));
+    explode.firstElementChild.textContent=assembled?'Separate parts':'Assemble filter';
+    const cue=studio.querySelector('.scroll-cue');
+    cue.firstChild.textContent=progress>.97?'SCROLL UP TO SEPARATE ':'SCROLL TO ASSEMBLE ';
+    cue.lastElementChild.textContent=progress>.97?'↑':'↓';
+
   }
   function cancel() {cancelAnimationFrame(frame);frame=0;lastTime=0;}
   function canMove(){return visible&&!document.hidden&&!userPaused&&!preference.matches&&!contextLost;}
@@ -55,10 +64,10 @@ async function start() {
     if(!canMove())return;
     const delta=lastTime?Math.min((now-lastTime)/1000,.05):1/60;
     lastTime=now;
-    spread+=(target-spread)*(1-Math.exp(-delta*24));
-    if(Math.abs(target-spread)<.001)spread=target;
+    progress+=(target-progress)*(1-Math.exp(-delta*24));
+    if(Math.abs(target-progress)<.001)progress=target;
     render();
-    if(spread!==target)frame=requestAnimationFrame(tick);
+    if(progress!==target)frame=requestAnimationFrame(tick);
     else lastTime=0;
   }
   function requestRender() {
@@ -66,7 +75,7 @@ async function start() {
   }
   function readScroll() {
     if(userPaused||preference.matches)return;
-    target=.04+.96*clamp((scrollY-scrollStart)/scrollDistance);
+    target=clamp((scrollY-scrollStart)/scrollDistance);
     requestRender();
   }
   function sync() {
@@ -82,26 +91,24 @@ async function start() {
   function resize() {
     const width=viewport.clientWidth,height=viewport.clientHeight;
     if(!width||!height)return;
-    aspect=width/height;
+    aspect=width/height;compact=width<650;
     renderer.setSize(width,height,false);
     const top=experience.getBoundingClientRect().top+scrollY;
-    const headerHeight=document.querySelector('header').getBoundingClientRect().height;
     scrollStart=Math.max(0,top-innerHeight*.65);
-    // Finish opening while the full-width scene is still held in view.
-    const end=top+experience.offsetHeight-studio.offsetHeight-headerHeight-12;
-    scrollDistance=Math.max(180,end-scrollStart);
+    // The assembly completes within the visible band, with no extra scroll space.
+    scrollDistance=Math.max(180,Math.min(260,top-72));
     readScroll();render();
   }
   explode.disabled=false;pause.disabled=false;
   explode.addEventListener('click',()=>{
-    target=spread>.5?0:1;
-    if(preference.matches||userPaused){spread=target;render();}
+    target=progress>.5?0:1;
+    if(preference.matches||userPaused){progress=target;render();}
     else requestRender();
   });
   pause.addEventListener('click',()=>{userPaused=!userPaused;sync();});
   preference.addEventListener('change',()=>{
     cancel();
-    if(preference.matches){spread=target=.04;render();}
+    if(preference.matches){progress=target=1;render();}
     sync();
   });
   canvas.addEventListener('pointerdown',event=>{
