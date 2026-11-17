@@ -38,7 +38,9 @@ async function start() {
 
   function render() {
     const half=compact?3.25-progress*1.35:2.5-progress*.6;
-    const span=compact?Math.min(4.2,aspect*3.25*.82):Math.min(13,aspect*2.5*.82);
+    // Reserve room for each enlarged component at the sides of narrow screens.
+    const initialHalf=compact?3.25:2.5;
+    const span=Math.max(0,Math.min(compact?4.2:13,aspect*initialHalf*.82,aspect*initialHalf-1.2));
     model.root.rotation.set(.02,-.28+progress*.12+rotation,-.07-progress*.12);
     inverse.copy(model.root.quaternion).invert();
     right.set(1,0,0).applyQuaternion(camera.quaternion).applyQuaternion(inverse);
