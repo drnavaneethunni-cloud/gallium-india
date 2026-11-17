@@ -5,14 +5,12 @@ const explode = document.querySelector('#studio-explode');
 const pause = document.querySelector('#studio-pause');
 const preference = matchMedia('(prefers-reduced-motion: reduce)');
 const descriptions = {
-  air: {category:'AIR FILTRATION',title:'Clean air. Strong performance.',image:'air-filter.jpg',name:'air filter'},
-  oil: {category:'OIL FILTRATION',title:'Protection in every circulation.',image:'oil-filter.jpg',name:'oil filter'},
-  hydraulic: {category:'HYDRAULIC FILTRATION',title:'Precision under pressure.',image:'hydraulic-filter.jpg',name:'hydraulic filter'}
+  air: {category:'AIR FILTRATION',title:'Air filter construction',image:'air-filter.jpg',name:'air filter'},
+  oil: {category:'OIL FILTRATION',title:'Oil filter construction',image:'oil-filter.jpg',name:'oil filter'},
+  hydraulic: {category:'HYDRAULIC FILTRATION',title:'Hydraulic filter construction',image:'hydraulic-filter.jpg',name:'hydraulic filter'}
 };
-const order = Object.keys(descriptions);
 let active = 'air', changeScene;
-
-function select(key, automatic = false) {
+function select(key) {
   if (!Object.hasOwn(descriptions,key)) return;
   active=key;
   const data=descriptions[key];
@@ -22,26 +20,16 @@ function select(key, automatic = false) {
   const fallback=document.querySelector('#studio-fallback');
   fallback.src=`assets/${data.image}`;fallback.alt=`Gallium ${data.name} category reference`;
   studio.dataset.filter=key;
-  changeScene?.(automatic);
+  changeScene?.();
 }
 tabs.forEach(button=>button.addEventListener('click',()=>select(button.dataset.filterModel)));
-
 function fallback(error) {
   studio.classList.remove('has-model');studio.classList.add('studio-unavailable');
   studio.querySelector('.studio-controls').hidden=true;
   document.querySelector('#studio-note').textContent='Gallium product reference images';
   console.warn('Interactive filter preview unavailable; product images remain available.',error);
 }
-
-const smooth = t => {t=Math.max(0,Math.min(1,t));return t*t*t*(t*(t*6-15)+10);};
-function assemblyAt(seconds) {
-  if(seconds<3)return 0;
-  if(seconds<6)return smooth((seconds-3)/3);
-  if(seconds<8.5)return 1;
-  if(seconds<11.5)return 1-smooth((seconds-8.5)/3);
-  return 0;
-}
-
+const clamp=value=>Math.max(0,Math.min(1,value));
 async function start() {
   const [THREE,{createModels,createStudioLighting}]=await Promise.all([
     import('./vendor/three.module.js'), import('./filter-models.mjs')
@@ -59,95 +47,88 @@ async function start() {
   camera.position.set(3.3,2.2,6.8);camera.lookAt(0,0,0);
   createStudioLighting(renderer,scene);
   const models=createModels();
-  Object.values(models).forEach(model=>scene.add(model.root));
-  // Compile every material once so selecting another filter does not stall the animation.
-  await renderer.compileAsync(scene,camera);
+  Object.entries(models).forEach(([key,model])=>{model.root.visible=key===active;scene.add(model.root);});
+  // Render the selected model immediately; there is no timer or all-model compilation gate.
   viewport.append(canvas);
-  let width=1,height=1,aspect=1,elapsed=0,started=0,spread=0,manual=null;
-  let userPaused=false,visible=false,frame=0,lastTime=0,autoModels=true;
-  let rotation=0,dragging=false,lastX=0,contextLost=false,fade;
+  let aspect=1,spread=.12,target=.12,scrollStart=0,scrollDistance=300;
+  let userPaused=false,visible=false,frame=0,lastTime=0,rotation=0,dragging=false,lastX=0,contextLost=false;
 
-  function updateLabels() {
-    const open=spread>.5;
-    const pressed=String(open);
-    if(explode.getAttribute('aria-pressed')!==pressed) {
-      explode.setAttribute('aria-pressed',pressed);
-      explode.firstElementChild.textContent=open?'Assemble filter':'Explore the layers';
-    }
-    const state=spread>.97?'LAYERS REVEALED':spread<.03?'ASSEMBLED':'EXPLORING THE LAYERS';
-    const phase=document.querySelector('#studio-phase');
-    if(phase.textContent!==state)phase.textContent=state;
-  }
   function render() {
     const model=models[active];
     model.pose(spread);
-    model.root.rotation.set(.08,-.28+(elapsed-started)*.13+rotation,-.24);
-    model.root.position.y=-.06+Math.sin(elapsed*.52)*.025;
+    model.root.rotation.set(.08,-.28+spread*.52+rotation,-.24+spread*.07);
+    model.root.position.y=-.06;
     const half=1.76+spread*.53+(aspect<1?.12:0);
     camera.left=-half*aspect;camera.right=half*aspect;camera.top=half;camera.bottom=-half;
     camera.updateProjectionMatrix();
     renderer.render(scene,camera);
     studio.style.setProperty('--explosion',spread.toFixed(3));
-    studio.style.setProperty('--cycle',autoModels&&manual===null?String(Math.min((elapsed-started)/14,1)):'1');
-    updateLabels();
+    const open=spread>.5;
+    explode.setAttribute('aria-pressed',String(open));
+    explode.firstElementChild.textContent=open?'Assemble filter':'View all layers';
+    document.querySelector('#studio-phase').textContent=spread>.97?'LAYERS REVEALED':spread<.03?'ASSEMBLED':'SCROLL TO REVEAL THE LAYERS';
   }
+  function cancel() {cancelAnimationFrame(frame);frame=0;lastTime=0;}
   function canMove(){return visible&&!document.hidden&&!userPaused&&!preference.matches&&!contextLost;}
   function tick(now) {
     frame=0;
     if(!canMove())return;
-    const delta=lastTime?Math.min((now-lastTime)/1000,.05):0;
+    const delta=lastTime?Math.min((now-lastTime)/1000,.05):1/60;
     lastTime=now;
-    if(!dragging)elapsed+=delta;
-    if(autoModels&&manual===null&&elapsed-started>=14) {
-      select(order[(order.indexOf(active)+1)%order.length],true);
-    }
-    const target=manual===null?assemblyAt((elapsed-started)%14):manual;
-    spread+=(target-spread)*(1-Math.exp(-delta*7));
+    spread+=(target-spread)*(1-Math.exp(-delta*24));
+    if(Math.abs(target-spread)<.001)spread=target;
     render();
-    frame=requestAnimationFrame(tick);
+    if(spread!==target)frame=requestAnimationFrame(tick);
+    else lastTime=0;
+  }
+  function requestRender() {
+    if(canMove()&&!frame){lastTime=0;frame=requestAnimationFrame(tick);}
+  }
+  function readScroll() {
+    if(userPaused||preference.matches)return;
+    target=.12+.88*clamp((scrollY-scrollStart)/scrollDistance);
+    requestRender();
   }
   function sync() {
     const stopped=userPaused||preference.matches;
     pause.disabled=preference.matches;
-    pause.lastElementChild.textContent=preference.matches?'Reduced motion':userPaused?'Resume motion':'Pause motion';
+    pause.lastElementChild.textContent=preference.matches?'Reduced motion':userPaused?'Enable scroll motion':'Pause scroll motion';
     pause.querySelector('path').setAttribute('d',stopped?'M4 2.5 13 8l-9 5.5z':'M4 3h2v10H4zm6 0h2v10h-2z');
     pause.setAttribute('aria-pressed',String(stopped));
-    studio.dataset.motion=stopped?'paused':'playing';
-    if(!canMove()) {
-      cancelAnimationFrame(frame);frame=0;lastTime=0;fade?.cancel();
-    } else if(!frame){lastTime=0;frame=requestAnimationFrame(tick);}
+    studio.dataset.motion=stopped?'paused':'scroll';
+    if(!canMove())cancel();
+    else readScroll();
   }
   function resize() {
-    width=viewport.clientWidth;height=viewport.clientHeight-50;
+    const width=viewport.clientWidth,height=viewport.clientHeight-45;
     if(!width||!height)return;
     aspect=width/height;
-    renderer.setSize(width,height,false);render();
+    renderer.setSize(width,height,false);
+    // Start as the scene enters the screen; desktop responds from the first scroll.
+    scrollStart=Math.max(0,viewport.getBoundingClientRect().top+scrollY-innerHeight*.8);
+    scrollDistance=Math.min(330,innerHeight*.45);
+    readScroll();render();
   }
-  changeScene=automatic=>{
-    if(!automatic)autoModels=false;
-    started=elapsed;manual=null;spread=0;
+  changeScene=()=>{
     Object.entries(models).forEach(([key,model])=>{model.root.visible=key===active;});
-    canvas.setAttribute('aria-label',`Animated illustrative ${descriptions[active].name} showing the media, core and seals. Use Explore the layers to separate the components.`);
-    fade?.cancel();
-    render();
-    if(!preference.matches&&!userPaused&&visible) {
-      fade=canvas.animate([{opacity:0,transform:'translateY(9px)'},{opacity:1,transform:'translateY(0)'}],{duration:650,easing:'cubic-bezier(.2,.65,.25,1)'});
-    }
+    canvas.setAttribute('aria-label',`Illustrative ${descriptions[active].name}. Scroll to separate the media, core and seals, or use the View all layers button.`);
+    rotation=0;render();
   };
   explode.disabled=false;pause.disabled=false;
   explode.addEventListener('click',()=>{
-    manual=spread>.5?0:1;autoModels=false;
-    if(preference.matches||userPaused){spread=manual;render();}
-    sync();
+    target=spread>.5?0:1;
+    if(preference.matches||userPaused){spread=target;render();}
+    else requestRender();
   });
   pause.addEventListener('click',()=>{userPaused=!userPaused;sync();});
   preference.addEventListener('change',()=>{
-    if(preference.matches){spread=manual??0;render();}
+    cancel();
+    if(preference.matches){spread=target=.12;render();}
     sync();
   });
   canvas.addEventListener('pointerdown',event=>{
     if(event.pointerType!=='mouse'||event.button!==0)return;
-    dragging=true;lastX=event.clientX;autoModels=false;canvas.setPointerCapture(event.pointerId);
+    dragging=true;lastX=event.clientX;canvas.setPointerCapture(event.pointerId);
   });
   canvas.addEventListener('pointermove',event=>{
     if(!dragging)return;
@@ -155,16 +136,18 @@ async function start() {
   });
   for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,()=>{dragging=false;});
   canvas.addEventListener('webglcontextlost',event=>{
-    event.preventDefault();contextLost=true;studio.classList.remove('has-model');sync();
+    event.preventDefault();contextLost=true;studio.classList.remove('has-model');cancel();
   });
   canvas.addEventListener('webglcontextrestored',()=>{
     contextLost=false;studio.classList.add('has-model');render();sync();
   });
+  addEventListener('scroll',readScroll,{passive:true});
+  addEventListener('resize',resize,{passive:true});
   document.addEventListener('visibilitychange',sync);
-  addEventListener('pagehide',()=>{cancelAnimationFrame(frame);frame=0;lastTime=0;});
+  addEventListener('pagehide',cancel);
   addEventListener('pageshow',sync);
   new ResizeObserver(resize).observe(viewport);
-  new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;sync();},{threshold:.05}).observe(viewport);
-  select(active,true);resize();studio.classList.add('has-model');sync();
+  new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;sync();},{threshold:0}).observe(viewport);
+  select(active);resize();studio.classList.add('has-model');sync();
 }
 if(studio&&viewport)start().catch(fallback);
