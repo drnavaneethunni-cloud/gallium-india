@@ -54,6 +54,9 @@ try {
   const mode = process.argv[2];
   check(process.argv.length <= 3 && (!mode || mode === '--test' || mode === '--unpack'), 'Usage: node build.mjs [--test|--unpack]');
   unpack();
+  // Editable website updates sit alongside the unchanged, verified asset bundle.
+  const updates = resolve(root, 'site');
+  if (existsSync(updates)) cpSync(updates, resolve(source, 'public'), {recursive: true});
   if (mode === '--test') {
     const tests = readdirSync(resolve(source, 'tests')).filter(name => name.endsWith('.test.mjs')).sort();
     check(tests.length > 0, 'No tests were found.');
