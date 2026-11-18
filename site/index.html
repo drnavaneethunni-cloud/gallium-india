@@ -16,6 +16,8 @@
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="homepage.css">
 <link rel="stylesheet" href="catalogue-ui.css">
+<link rel="stylesheet" href="filtration-intro.css">
+<script type="module" src="filtration-intro.mjs"></script>
 <script type="module" src="app.js"></script>
 </head>
 <body>
@@ -29,7 +31,7 @@
  <button class="menu-toggle" id="nav-toggle" aria-label="Open navigation" aria-controls="main-nav" aria-expanded="false"><svg class="icon" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg></button>
 </nav></header>
 <main id="main">
- <section class="hero" id="find-filter" aria-labelledby="hero-title"><div class="wrap">
+ <section class="hero" id="find-filter" aria-labelledby="hero-title"><canvas class="filtration-canvas" aria-hidden="true" hidden></canvas><div class="wrap">
   <div class="hero-inner">
    <div class="hero-copy">
     <p class="eyebrow"><span class="dot"></span>Inspired by filtration.</p>
@@ -45,7 +47,7 @@
    </div>
    <figure class="hero-visual" style="margin-inline:0;margin-block:0">
     <img src="assets/air-filter.jpg" alt="Gallium cylindrical air filter with pleated media and a metal mesh exterior" fetchpriority="high" width="1701" height="1135">
-    <figcaption class="product-caption"><div><div class="caption-title"><span class="caption-rule"></span>Air filtration</div><div class="caption-sub">A closer look at the Gallium range.</div></div><div class="hero-index">01 <span></span> 04</div></figcaption>
+    <figcaption class="product-caption"><div><div class="caption-title"><span class="caption-rule"></span>Air filtration</div><div class="caption-sub">A closer look at the Gallium range.</div></div><button type="button" class="filtration-toggle" hidden aria-label="Replay filtration animation"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6a7 7 0 1 1-1 7M4 2v5H0"/></svg><span>Replay animation</span></button></figcaption>
    </figure>
   </div>
   <div class="intro-line"><span><strong>24 filter categories.</strong> One place to find your fit.</span><div class="right-line"><span>Engine & equipment</span><span>Industrial systems</span><span>Parts & catalogues</span></div></div>
