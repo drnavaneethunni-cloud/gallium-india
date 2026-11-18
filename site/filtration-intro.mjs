@@ -5,7 +5,7 @@ const photograph = hero?.querySelector('.hero-visual > img');
 const toggle = hero?.querySelector('.filtration-toggle');
 const preference = matchMedia('(prefers-reduced-motion: reduce)');
 const context = canvas?.getContext('2d');
-const DURATION = 4600;
+const DURATION = 4800;
 const clamp = value => Math.max(0, Math.min(1, value));
 const smooth = value => { const t = clamp(value); return t * t * (3 - 2 * t); };
 
@@ -98,8 +98,9 @@ function inletPosition(image, heroBounds) {
   return {
     x: rect.left + rect.width / 2 - heroBounds.left + transform.a * dx + transform.c * dy,
     y: rect.top + rect.height / 2 - heroBounds.top + transform.b * dx + transform.d * dy,
-    rx: image.clientWidth * 0.047,
-    ry: image.clientHeight * 0.13,
+    rx: image.clientWidth * 0.057,
+    ry: image.clientHeight * 0.173,
+    angle: Math.atan2(transform.b, transform.a),
   };
 }
 
@@ -107,26 +108,49 @@ function createScene(width, height, inlet) {
   // Fixed seed keeps the composition and particle density consistent on every replay.
   let seed = 691;
   const random = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
-  const distance = Math.hypot(width, height);
-  function mote(large = false) {
-    const x = random() * width, y = random() * height;
-    const angle = random() * Math.PI * 2;
-    const spread = Math.sqrt(random());
+  const mobile = width < 600;
+  // A common approach direction makes the intake read as the source of suction.
+  const reach = mobile ? Math.min(420, inlet.y * 0.7) : Math.min(650, inlet.x * 0.8);
+  const front = mobile ? {x: -0.12, y: -0.993} : {x: -0.997, y: -0.075};
+  const cross = {x: -front.y, y: front.x};
+  function lane(offset, spread = 1) {
+    const wide = mobile ? width * 0.44 : height * 0.43;
     return {
-      x, y,
-      endX: inlet.x + Math.cos(angle) * inlet.rx * spread,
-      endY: inlet.y + Math.sin(angle) * inlet.ry * spread,
-      phase: random() * Math.PI * 2,
-      bend: (random() - 0.5) * Math.min(width, height) * 0.8,
-      delay: 340 + random() * 1150,
-      travel: 1700 + Math.hypot(x - inlet.x, y - inlet.y) / distance * 1400 + random() * 200,
-      radius: large ? 90 + random() * 170 : 0.9 + random() ** 2 * 4.1,
-      alpha: large ? 0.2 + random() * 0.15 : 0.35 + random() * 0.4,
-      warm: random() > 0.65,
+      a: {x: inlet.x + front.x * reach + cross.x * offset * wide,
+          y: inlet.y + front.y * reach + cross.y * offset * wide},
+      b: {x: inlet.x + front.x * reach * 0.62 + cross.x * offset * wide * 0.85,
+          y: inlet.y + front.y * reach * 0.62 + cross.y * offset * wide * 0.85},
+      c: {x: inlet.x + front.x * inlet.rx * 2.1 + cross.x * offset * inlet.ry * 0.6,
+          y: inlet.y + front.y * inlet.rx * 2.1 + cross.y * offset * inlet.ry * 0.6},
+      // Every path ends well inside the photograph's opening, never in the surrounding air.
+      d: {x: inlet.x + offset * inlet.rx * 0.22 * spread,
+          y: inlet.y + offset * inlet.ry * 0.5 * spread},
     };
   }
-  const particles = Array.from({length: width < 600 ? 130 : 230}, () => mote());
-  const clouds = Array.from({length: 12}, () => mote(true));
+  function mote(stream = false, large = false) {
+    const offset = random() * 2 - 1;
+    const path = lane(offset);
+    if (!stream) {
+      path.a = {x: random() * width, y: random() * height};
+      // Dust from behind the filter curls around to the front before entering.
+      if (!mobile && path.a.x > inlet.x) {
+        path.b.y = inlet.y + (path.a.y < inlet.y ? -1 : 1) * inlet.ry * 2.2;
+      }
+    }
+    return {
+      path, stream,
+      delay: stream ? 600 + random() * 2350 : 350 + random() * 1000,
+      travel: stream ? 1050 + random() * 650 : 1900 + random() * 1100,
+      radius: large ? 110 + random() * 150 : (stream ? 2.5 : 1.4) + random() ** 2 * 4.2,
+      alpha: large ? 0.28 : (stream ? 0.8 : 0.55) + random() * 0.18,
+      warm: random() > 0.55,
+    };
+  }
+  const ambient = Array.from({length: mobile ? 120 : 210}, () => mote());
+  const stream = Array.from({length: mobile ? 130 : 220}, () => mote(true));
+  const particles = [...ambient, ...stream];
+  const clouds = Array.from({length: 16}, () => mote(false, true));
+  const lanes = [-1, -0.65, -0.3, 0.3, 0.65, 1].map(offset => lane(offset));
   const fog = document.createElement('canvas');
   fog.width = 160; fog.height = 160;
   const brush = fog.getContext('2d');
@@ -136,61 +160,102 @@ function createScene(width, height, inlet) {
   gradient.addColorStop(1, 'rgba(106,103,91,0)');
   brush.fillStyle = gradient;
   brush.fillRect(0, 0, 160, 160);
-  return {width, height, inlet, particles, clouds, fog, distance};
+  return {width, height, inlet, particles, ambient, clouds, fog, lanes};
 }
 
 function position(particle, elapsed) {
   const progress = clamp((elapsed - particle.delay) / particle.travel);
-  const pull = progress ** 1.7;
-  const dx = particle.endX - particle.x, dy = particle.endY - particle.y;
-  const length = Math.hypot(dx, dy) || 1;
-  const bend = Math.sin(Math.PI * pull) * particle.bend;
-  const drift = (1 - pull) * Math.min(elapsed / 650, 1);
+  // Increasing speed, followed by a short visible passage into the opening.
+  return {...curvePoint(particle.path, progress ** 1.65), progress};
+}
+
+function curvePoint({a, b, c, d}, t) {
+  const s = 1 - t;
   return {
-    x: particle.x + dx * pull - dy / length * bend + Math.sin(elapsed / 700 + particle.phase) * 9 * drift,
-    y: particle.y + dy * pull + dx / length * bend + Math.cos(elapsed / 850 + particle.phase) * 6 * drift,
-    progress,
+    x: s*s*s*a.x + 3*s*s*t*b.x + 3*s*t*t*c.x + t*t*t*d.x,
+    y: s*s*s*a.y + 3*s*s*t*b.y + 3*s*t*t*c.y + t*t*t*d.y,
   };
 }
 
-function drawScene(ctx, scene, elapsed) {
-  const {width, height, inlet, distance} = scene;
-  const time = elapsed / DURATION;
-  ctx.clearRect(0, 0, width, height);
+function traceLane(ctx, path, from = 0, to = 1) {
+  ctx.beginPath();
+  for (let step = 0; step <= 24; step++) {
+    const p = curvePoint(path, from + (to - from) * step / 24);
+    if (step === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+  }
+}
 
-  // The clear region grows outward from the intake as the haze is drawn in.
-  const clearing = smooth((time - 0.12) / 0.77);
-  const reach = Math.max(1, distance * clearing);
-  const haze = ctx.createRadialGradient(inlet.x, inlet.y, 0, inlet.x, inlet.y, reach);
-  const density = 0.56 * (1 - smooth((time - 0.52) / 0.41));
-  haze.addColorStop(0, `rgba(99,100,90,${density * (1 - clearing)})`);
-  haze.addColorStop(0.7, `rgba(104,103,94,${density})`);
-  haze.addColorStop(1, `rgba(111,108,97,${density})`);
-  ctx.fillStyle = haze;
+function insideIntake(point, inlet) {
+  const x = point.x - inlet.x, y = point.y - inlet.y;
+  const cos = Math.cos(inlet.angle), sin = Math.sin(inlet.angle);
+  return ((x*cos + y*sin)/inlet.rx)**2 + ((-x*sin + y*cos)/inlet.ry)**2 < 0.82;
+}
+
+function drawScene(ctx, scene, elapsed) {
+  const {width, height, inlet} = scene;
+  ctx.clearRect(0, 0, width, height);
+  const active = smooth((elapsed - 400) / 600) * (1 - smooth((elapsed - 3900) / 650));
+  const captured = scene.ambient.filter(p => elapsed >= p.delay + p.travel).length / scene.ambient.length;
+  const density = 0.5 * (1 - smooth(captured));
+  ctx.fillStyle = `rgba(105,103,94,${density})`;
   ctx.fillRect(0, 0, width, height);
+
+  // Translucent streamlines form a visible funnel, with moving slugs of dusty air.
+  ctx.lineCap = 'round';
+  for (const [index, path] of scene.lanes.entries()) {
+    traceLane(ctx, path);
+    ctx.strokeStyle = `rgba(223,229,227,${active * 0.26})`;
+    ctx.lineWidth = 7;
+    ctx.stroke();
+    ctx.strokeStyle = `rgba(85,102,105,${active * 0.18})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    const pulse = ((elapsed / 1150 + index * 0.17) % 1) ** 1.45;
+    traceLane(ctx, path, Math.max(0, pulse - 0.19), pulse);
+    ctx.strokeStyle = `rgba(247,249,246,${active * 0.75})`;
+    ctx.lineWidth = 1.8;
+    ctx.stroke();
+  }
+
+  // A restrained highlight follows the actual tilted lip, grounding the effect in the product.
+  ctx.save();
+  ctx.translate(inlet.x, inlet.y); ctx.rotate(inlet.angle);
+  ctx.beginPath(); ctx.ellipse(0, 0, inlet.rx, inlet.ry, 0, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(22,30,29,${active * 0.18})`; ctx.fill();
+  ctx.strokeStyle = `rgba(234,242,236,${active * 0.7})`;
+  ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.restore();
 
   for (const cloud of scene.clouds) {
     const point = position(cloud, elapsed);
     if (point.progress >= 1) continue;
-    const radius = cloud.radius * (1 - point.progress * 0.92);
-    ctx.globalAlpha = cloud.alpha * (1 - smooth(point.progress));
+    const radius = cloud.radius * (1 - point.progress ** 1.6) + 2;
+    ctx.globalAlpha = cloud.alpha * (1 - smooth((point.progress - 0.92) / 0.08));
     ctx.drawImage(scene.fog, point.x - radius, point.y - radius, radius * 2, radius * 2);
   }
   ctx.globalAlpha = 1;
 
   for (const particle of scene.particles) {
+    if (particle.stream && elapsed < particle.delay) continue;
     const point = position(particle, elapsed);
     if (point.progress >= 1) continue;
-    const fade = 1 - smooth((point.progress - 0.82) / 0.18);
-    const radius = Math.max(0.25, particle.radius * (1 - point.progress * 0.8));
-    const color = particle.warm ? '113,94,70' : '53,58,56';
-    if (point.progress > 0.15) {
-      const tail = position(particle, elapsed - 48);
-      ctx.strokeStyle = `rgba(${color},${particle.alpha * fade * 0.5})`;
-      ctx.lineWidth = Math.max(0.5, radius * 0.65);
-      ctx.beginPath(); ctx.moveTo(tail.x, tail.y); ctx.lineTo(point.x, point.y); ctx.stroke();
+    // No fading in open air: shrink and disappear only after entering the visible intake.
+    const swallowed = insideIntake(point, inlet) ? smooth((point.progress - 0.93) / 0.07) : 0;
+    const appear = particle.stream ? smooth((elapsed - particle.delay) / 100) : 1;
+    const opacity = particle.alpha * appear * (1 - swallowed);
+    const radius = Math.max(0.25, particle.radius * (1 - swallowed * 0.95));
+    const color = particle.warm ? '133,91,44' : '40,46,43';
+    if (point.progress > 0.08) {
+      ctx.strokeStyle = `rgba(${color},${opacity * 0.55})`;
+      ctx.lineWidth = Math.max(0.8, radius * 0.52);
+      ctx.beginPath();
+      for (let step = 0; step <= 5; step++) {
+        const tail = position(particle, elapsed - 85 + step * 17);
+        if (step === 0) ctx.moveTo(tail.x, tail.y); else ctx.lineTo(tail.x, tail.y);
+      }
+      ctx.stroke();
     }
-    ctx.fillStyle = `rgba(${color},${particle.alpha * fade})`;
+    ctx.fillStyle = `rgba(${color},${opacity})`;
     ctx.beginPath(); ctx.arc(point.x, point.y, radius, 0, Math.PI * 2); ctx.fill();
   }
 }
